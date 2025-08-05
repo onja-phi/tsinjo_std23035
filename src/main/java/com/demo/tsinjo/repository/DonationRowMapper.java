@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class DonationRowMapper implements RowMapper<Donation> {
 
@@ -19,9 +18,9 @@ public class DonationRowMapper implements RowMapper<Donation> {
         Payment payment = new Payment();
         payment.setId(rs.getLong("payment_id"));
         payment.setReference(rs.getString("reference"));
-        payment.setMethod(rs.getString("method"));
+        payment.setMethod(PaymentMethod.valueOf(rs.getString("method")));
         payment.setAmountAr(rs.getInt("amount_ar"));
-        payment.setDate(rs.getDate("date").toLocalDate());
+        payment.setDate(rs.getTimestamp("date").toLocalDateTime());
         payment.setStatus(rs.getString("status"));
 
         Donation donation = new Donation();
